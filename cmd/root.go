@@ -15,6 +15,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.AddCommand(saveCmd)
+	rootCmd.AddCommand(restoreCmd)
 
 	var defaultKubeConfig = filepath.Join(homedir.HomeDir(), ".kube", "config")
 	if kubeConfigEnv, ok := os.LookupEnv("KUBECONFIG"); ok {
