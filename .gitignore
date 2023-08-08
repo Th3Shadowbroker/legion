@@ -7,3 +7,5 @@
 *.bat
 *.sh
 *.exe
+
+!.github/**
