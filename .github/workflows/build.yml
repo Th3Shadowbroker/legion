@@ -27,3 +27,9 @@ jobs:
           path: |
             legion
             legion.exe
+      
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ github.event_name == 'release' }}
+        with:
+          files: artifacts-*
