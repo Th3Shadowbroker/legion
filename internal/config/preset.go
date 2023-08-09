@@ -57,7 +57,7 @@ func (p *Preset) ApplyDeployments(client *kube.KubeClient) {
 			}
 
 			if !exists {
-				pterm.Warning.Println("Deployment %s not found in namespace %s", deployment.Name, p.Namespace)
+				pterm.Warning.Printfln("Deployment %s not found in namespace %s", deployment.Name, p.Namespace)
 				continue
 			}
 
@@ -72,14 +72,14 @@ func (p *Preset) ApplyStatefulSet(client *kube.KubeClient) {
 		var progress, _ = pterm.DefaultSpinner.Start(fmt.Sprintf("Applying statefulsets to namespace %s", p.Namespace))
 		for _, statefulSet := range p.StatefulSets {
 			progress.UpdateText(fmt.Sprintf("Scaling %s to %d", statefulSet.Name, statefulSet.Replicas))
-			_, exists, err := client.SetDeploymentScale(p.Namespace, statefulSet.Name, statefulSet.Replicas)
+			_, exists, err := client.SetStatefulSetScale(p.Namespace, statefulSet.Name, statefulSet.Replicas)
 			if err != nil {
-				pterm.Error.Println("Could not scale statefulset %s in namespace %s: %s", statefulSet.Name, p.Namespace, err.Error())
+				pterm.Error.Printfln("Could not scale statefulset %s in namespace %s: %s", statefulSet.Name, p.Namespace, err.Error())
 				continue
 			}
 
 			if !exists {
-				pterm.Warning.Println("Statefulset %s not found in namespace %s", statefulSet.Name, p.Namespace)
+				pterm.Warning.Printfln("Statefulset %s not found in namespace %s", statefulSet.Name, p.Namespace)
 				continue
 			}
 
@@ -119,12 +119,12 @@ func (p *Preset) PopulateStatefulSets(client *kube.KubeClient) {
 		pterm.Error.Printfln("Could not fetch statefulsets: %s", err.Error())
 	}
 
-	for _, deployment := range statefulSets.Items {
-		p.Deployments = append(p.Deployments, ScalableResource{
-			Name:     deployment.Name,
-			Replicas: *deployment.Spec.Replicas,
+	for _, statefulSet := range statefulSets.Items {
+		p.StatefulSets = append(p.StatefulSets, ScalableResource{
+			Name:     statefulSet.Name,
+			Replicas: *statefulSet.Spec.Replicas,
 		})
-		pterm.Success.Printfln("Added %s", deployment.Name)
+		pterm.Success.Printfln("Added %s", statefulSet.Name)
 	}
 	spinner.Success(fmt.Sprintf("Processed %d statefulsets", len(statefulSets.Items)))
 }
