@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/go-playground/validator/v10 v10.15.3
-	github.com/pterm/pterm v0.12.66
+	github.com/pterm/pterm v0.12.67
 	github.com/spf13/cobra v1.7.0
 	gopkg.in/yaml.v3 v3.0.1
 	k8s.io/api v0.28.1
