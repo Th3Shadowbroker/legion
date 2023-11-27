@@ -3,7 +3,7 @@ module github.com/th3shadowbroker/legion
 go 1.21
 
 require (
-	github.com/go-playground/validator/v10 v10.15.4
+	github.com/go-playground/validator/v10 v10.16.0
 	github.com/pterm/pterm v0.12.71
 	github.com/spf13/cobra v1.8.0
 	gopkg.in/yaml.v3 v3.0.1
